@@ -6,6 +6,7 @@ public class Platform : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        PlatformGenerator.Instance.MovePlatform();
+        PlatformGenerator.Instance.CreatePlatform();
+        Destroy(gameObject);
     }
 }

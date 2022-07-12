@@ -14,8 +14,6 @@ public class PlatformGenerator : MonoBehaviour
     [SerializeField] private float minimalPlatformYSpan = 1f;
     [SerializeField] private float maximalPlatformYSpan = 2.5f;
 
-    private int lastMovedPlatformIndex = 0;
-
     List<GameObject> platforms = new List<GameObject>();
 
     private void Awake()
@@ -40,8 +38,7 @@ public class PlatformGenerator : MonoBehaviour
     {
         for (int i = 0; i < numberOfPlatforms; i++)
         {
-            var newPlatform = Instantiate(platformType, GeneratePlatformPos(platforms.Count - 1), platformType.transform.rotation);
-            platforms.Add(newPlatform);
+            CreatePlatform();
         }
     }
 
@@ -54,22 +51,11 @@ public class PlatformGenerator : MonoBehaviour
         return platformPos;
     }
 
-    public void MovePlatform()
+    public void CreatePlatform()
     {
-        Vector3 newPlatformPos;
-        if (lastMovedPlatformIndex == 0)
-        {
-            newPlatformPos = GeneratePlatformPos(platforms.Count - 1);
-        }
-        else
-        {
-            newPlatformPos = GeneratePlatformPos(lastMovedPlatformIndex - 1);
-        }
-        platforms[lastMovedPlatformIndex].transform.position = newPlatformPos;
-        lastMovedPlatformIndex++;
-        if (lastMovedPlatformIndex == platforms.Count)
-        {
-            lastMovedPlatformIndex = 0;
-        }
+        platforms.RemoveAt(0);
+
+        var newPlatform = Instantiate(platformType, GeneratePlatformPos(platforms.Count - 1), platformType.transform.rotation);
+        platforms.Add(newPlatform);
     }
 }
