@@ -20,6 +20,28 @@ public class Doodle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        OutOffScreenBorderCheck();
+
+        HorizontalMovement();
+    }
+
+    private void OutOffScreenBorderCheck()
+    {
+        var screenPos = Camera.main.WorldToScreenPoint(transform.position);
+        if (screenPos.x < 0)
+        {
+            var newX = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x;
+            transform.position = new Vector3(newX, transform.position.y, transform.position.z);
+        } 
+        else if (screenPos.x > Screen.width)
+        {
+            var newX = Camera.main.ScreenToWorldPoint(Vector3.zero).x;
+            transform.position = new Vector3(newX, transform.position.y, transform.position.z);
+        }
+    }
+
+    private void HorizontalMovement()
+    {
 #if UNITY_EDITOR
         horizontalInput = Input.GetAxis("Horizontal");
 #else
