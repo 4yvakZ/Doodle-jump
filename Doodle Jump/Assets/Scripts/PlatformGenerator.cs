@@ -42,6 +42,11 @@ public class PlatformGenerator : MonoBehaviour
         }
     }
 
+    public void CreatePlatform()
+    {
+        var newPlatform = Instantiate(platformType, GeneratePlatformPos(platforms.Count - 1), platformType.transform.rotation);
+        platforms.Add(newPlatform);
+    }
     Vector3 GeneratePlatformPos(int refPlatformIndex)
     {
         Vector3 platformPos = new Vector3();
@@ -51,11 +56,10 @@ public class PlatformGenerator : MonoBehaviour
         return platformPos;
     }
 
-    public void CreatePlatform()
+    public void AddPlatform()
     {
         platforms.RemoveAt(0);
-
-        var newPlatform = Instantiate(platformType, GeneratePlatformPos(platforms.Count - 1), platformType.transform.rotation);
-        platforms.Add(newPlatform);
+        CreatePlatform();
     }
+    
 }
