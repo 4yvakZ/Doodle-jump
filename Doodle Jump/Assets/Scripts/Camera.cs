@@ -14,7 +14,7 @@ public class Camera : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if (doodleTransform.position.y > transform.position.y)
+        if (doodleTransform != null && doodleTransform.position.y > transform.position.y)
         {
             transform.position = new Vector3(transform.position.x, doodleTransform.position.y, transform.position.z);
         }

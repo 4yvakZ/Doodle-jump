@@ -39,10 +39,15 @@ public class Doodle : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
         if (doodleRB.velocity.y <= 0)
         {
             doodleRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("Game Over");
+        Destroy(gameObject);
     }
 }
