@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    
+
     public static GameManager Instance { get; private set; }
-    public int NumberOfPlatformsLevels { get => numberOfPlatformsLevels;}
-    public float PlatformYLevelStep { get => platformYLevelStep;}
-    public float PlatformXRange { get => platformXRange;}
-    public float PlatformYRange { get => platformYRange;}
 
     [Header("Platform Generation")]
-    [SerializeField] private GameObject platform;
+    [SerializeField] private GameObject initialPlatform;
+    [SerializeField] private GameObject platformType;
 
     [SerializeField] private int numberOfPlatformsLevels = 10;
     [SerializeField] private float platformXRange = 2f;
-    [SerializeField] private float platformYRange = 1f;
-    [SerializeField] private float platformYLevelStep = 3f;
-    [SerializeField] private float platformFirstLevelY = -2f;
+    [SerializeField] private float minimalPlatformYSpan = 1f;
+    [SerializeField] private float maximalPlatformYSpan = 2.5f;
+
+    private int lastMovedPlatformIndex = 0;
+
+    List<GameObject> platforms = new List<GameObject>();
 
     void Awake()
     {
@@ -34,7 +34,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GeneratePlatforms(NumberOfPlatformsLevels);
+        platforms.Add(initialPlatform);
+        GeneratePlatforms(numberOfPlatformsLevels);
     }
 
     // Update is called once per frame
@@ -43,24 +44,40 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void GeneratePlatforms(int numberOfPlatformsLevels)
+    void GeneratePlatforms(int numberOfPlatforms)
     {
-        for (int i = 0; i < numberOfPlatformsLevels; i++)
+        for (int i = 0; i < numberOfPlatforms; i++)
         {
-            int numberOfPlatformsOnLevel = Random.Range(1, 3);
-            //Debug.Log("Level: " + i + " Platforms: " + numberOfPlatformsOnLevel);
-            for (int j = 0; j < numberOfPlatformsOnLevel; j++)
-            {
-                Instantiate(platform, GeneratePlatformPos(i), platform.transform.rotation);
-            }
+            var newPlatform = Instantiate(platformType, GeneratePlatformPos(platforms.Count - 1), platformType.transform.rotation);
+            platforms.Add(newPlatform);
         }
     }
 
-    Vector3 GeneratePlatformPos(int level)
+    Vector3 GeneratePlatformPos(int refPlatformIndex)
     {
         Vector3 platformPos = new Vector3();
-        platformPos.x = Random.Range(-PlatformXRange, PlatformXRange);
-        platformPos.y = Random.Range(PlatformYLevelStep * level + platformFirstLevelY - PlatformYRange, PlatformYLevelStep * level + platformFirstLevelY + PlatformYRange);
+        platformPos.x = Random.Range(-platformXRange, platformXRange);
+        var lastPlatformY = platforms[refPlatformIndex].transform.position.y;
+        platformPos.y = Random.Range(lastPlatformY + minimalPlatformYSpan, lastPlatformY + maximalPlatformYSpan);
         return platformPos;
+    }
+
+    public void MovePlatform()
+    {
+        Vector3 newPlatformPos;
+        if (lastMovedPlatformIndex == 0)
+        {
+            newPlatformPos = GeneratePlatformPos(platforms.Count - 1);
+        }
+        else
+        {
+            newPlatformPos = GeneratePlatformPos(lastMovedPlatformIndex - 1);
+        }
+        platforms[lastMovedPlatformIndex].transform.position = newPlatformPos;
+        lastMovedPlatformIndex++;
+        if (lastMovedPlatformIndex == platforms.Count)
+        {
+            lastMovedPlatformIndex = 0;
+        }
     }
 }
