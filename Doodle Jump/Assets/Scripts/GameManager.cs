@@ -7,18 +7,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; }
 
-    [Header("Platform Generation")]
-    [SerializeField] private GameObject initialPlatform;
-    [SerializeField] private GameObject platformType;
-
-    [SerializeField] private int numberOfPlatformsLevels = 10;
-    [SerializeField] private float platformXRange = 2f;
-    [SerializeField] private float minimalPlatformYSpan = 1f;
-    [SerializeField] private float maximalPlatformYSpan = 2.5f;
-
-    private int lastMovedPlatformIndex = 0;
-
-    List<GameObject> platforms = new List<GameObject>();
+   
 
     void Awake()
     {
@@ -34,50 +23,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        platforms.Add(initialPlatform);
-        GeneratePlatforms(numberOfPlatformsLevels);
+        
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    void GeneratePlatforms(int numberOfPlatforms)
-    {
-        for (int i = 0; i < numberOfPlatforms; i++)
-        {
-            var newPlatform = Instantiate(platformType, GeneratePlatformPos(platforms.Count - 1), platformType.transform.rotation);
-            platforms.Add(newPlatform);
-        }
-    }
-
-    Vector3 GeneratePlatformPos(int refPlatformIndex)
-    {
-        Vector3 platformPos = new Vector3();
-        platformPos.x = Random.Range(-platformXRange, platformXRange);
-        var lastPlatformY = platforms[refPlatformIndex].transform.position.y;
-        platformPos.y = Random.Range(lastPlatformY + minimalPlatformYSpan, lastPlatformY + maximalPlatformYSpan);
-        return platformPos;
-    }
-
-    public void MovePlatform()
-    {
-        Vector3 newPlatformPos;
-        if (lastMovedPlatformIndex == 0)
-        {
-            newPlatformPos = GeneratePlatformPos(platforms.Count - 1);
-        }
-        else
-        {
-            newPlatformPos = GeneratePlatformPos(lastMovedPlatformIndex - 1);
-        }
-        platforms[lastMovedPlatformIndex].transform.position = newPlatformPos;
-        lastMovedPlatformIndex++;
-        if (lastMovedPlatformIndex == platforms.Count)
-        {
-            lastMovedPlatformIndex = 0;
-        }
-    }
+    
 }
