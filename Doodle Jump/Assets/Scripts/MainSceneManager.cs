@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuManager : MonoBehaviour
+public class MainSceneManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text highscreText;
     // Start is called before the first frame update
@@ -14,8 +14,8 @@ public class MenuManager : MonoBehaviour
         highscreText.text = "Highscore: " + GameManager.Instance.Highscore;
     }
 
-    public void StartGame()
+    public void GoToMainMenu()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
     }
 }
