@@ -61,9 +61,15 @@ public class Doodle : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (doodleRB.velocity.y <= 0)
+        if (doodleRB.velocity.y == 0)
         {
-            doodleRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            //doodleRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            doodleRB.velocity = Vector2.up * jumpForce;
+            if (collision.gameObject.CompareTag("Trap Platform"))
+            {
+                PlatformGenerator.Instance.AddPlatform();
+                Destroy(collision.gameObject.gameObject);
+            }
         }
     }
 
