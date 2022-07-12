@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Camera : MonoBehaviour
 {
+    [SerializeField] private Transform doodleTransform;
     // Start is called before the first frame update
     void Start()
     {
@@ -11,8 +12,11 @@ public class Camera : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        
+        if (doodleTransform.position.y > transform.position.y)
+        {
+            transform.position = new Vector3(transform.position.x, doodleTransform.position.y, transform.position.z);
+        }
     }
 }
