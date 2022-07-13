@@ -14,6 +14,17 @@ public class MenuManager : MonoBehaviour
         highscreText.text = "Highscore: " + GameManager.Instance.Highscore;
     }
 
+    void Update()
+    {
+        if (Application.platform == RuntimePlatform.Android)
+        {
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
+        }
+    }
     public void StartGame()
     {
         SceneManager.LoadScene(1);

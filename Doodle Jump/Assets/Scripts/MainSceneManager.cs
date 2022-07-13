@@ -24,6 +24,7 @@ public class MainSceneManager : MonoBehaviour
     [SerializeField] private Button mainMenuButton;
     [SerializeField] private Button pauseButton;
     private int score = 0;
+    private bool isPaused = false;
 
     void Awake()
     {
@@ -45,11 +46,28 @@ public class MainSceneManager : MonoBehaviour
 
     void Update()
     {
-        
+
         if (doodleTransform != null && Mathf.FloorToInt(doodleTransform.position.y) > score)
         {
             score = Mathf.FloorToInt(doodleTransform.position.y);
             scoreText.text = "Score: " + score;
+        }
+
+
+        if (Application.platform == RuntimePlatform.Android)
+        {
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (isPaused)
+                {
+                    ResumeGame();
+                    isPaused = false;
+                    return;
+                }
+
+                SceneManager.LoadScene(0);
+            }
         }
     }
 
@@ -61,6 +79,7 @@ public class MainSceneManager : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0;
+        isPaused = true;
         pauseButton.gameObject.SetActive(false);
         restartButton.gameObject.SetActive(true);
         resumeButton.gameObject.SetActive(true);
