@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 884638422828186664}
   - component: {fileID: 884638422828186667}
-  - component: {fileID: 884638422828186666}
   - component: {fileID: 884638422828186645}
   - component: {fileID: 884638422828186644}
   - component: {fileID: 1240778918567251120}
+  - component: {fileID: 6924758108444246390}
   m_Layer: 0
   m_Name: Platform
   m_TagString: Untagged
@@ -88,32 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &884638422828186666
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 884638422828186647}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 1
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.024194479, y: 0.37053674}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.94, y: 1.46}
-    newSize: {x: 4.94, y: 1.46}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 4.4561105, y: 0.18664774}
-  m_EdgeRadius: 0
 --- !u!251 &884638422828186645
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -153,7 +127,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 7
+  m_Constraints: 4
 --- !u!114 &1240778918567251120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,3 +140,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8f95ed4d760b4d418b675d500d34867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!68 &6924758108444246390
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 884638422828186647}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 1
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -1.9450805, y: 0.56529844}
+  - {x: 2.2782028, y: 0.56529844}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0

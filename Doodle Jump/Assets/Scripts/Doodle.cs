@@ -77,7 +77,7 @@ public class Doodle : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (doodleRB.velocity.y == 0)
+        if (collision.relativeVelocity.y >= 0)
         {
             //doodleRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             doodleRB.velocity = Vector2.up * jumpForce;
