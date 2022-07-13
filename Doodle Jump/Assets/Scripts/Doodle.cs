@@ -7,6 +7,7 @@ public class Doodle : MonoBehaviour
     [SerializeField] private float jumpForce = 10f;
     [SerializeField] private float horizontalSpeed = 10f;
     [SerializeField] private float horizontalInput;
+    private AudioSource jumpAudioSource;
     private bool isLeftPressed = false;
     private bool isRightPresed = false;
 
@@ -17,6 +18,7 @@ public class Doodle : MonoBehaviour
     {
         doodleRB = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        jumpAudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -79,6 +81,7 @@ public class Doodle : MonoBehaviour
         {
             //doodleRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             doodleRB.velocity = Vector2.up * jumpForce;
+            jumpAudioSource.Play();
             if (collision.gameObject.CompareTag("Trap Platform"))
             {
                 PlatformGenerator.Instance.AddPlatform();
@@ -89,7 +92,7 @@ public class Doodle : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Game Over");
+        MainSceneManager.Instance.GameOver();
         Destroy(gameObject);
     }
 
