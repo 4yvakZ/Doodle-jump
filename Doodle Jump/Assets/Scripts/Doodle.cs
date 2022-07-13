@@ -7,6 +7,8 @@ public class Doodle : MonoBehaviour
     [SerializeField] private float jumpForce = 10f;
     [SerializeField] private float horizontalSpeed = 10f;
     [SerializeField] private float horizontalInput;
+    private bool isLeftPressed = false;
+    private bool isRightPresed = false;
 
     private Rigidbody2D doodleRB;
     private SpriteRenderer spriteRenderer;
@@ -45,14 +47,26 @@ public class Doodle : MonoBehaviour
 #if UNITY_EDITOR
         horizontalInput = Input.GetAxis("Horizontal");
 #else
-        horizontalInput = Input.acceleration.x;
+        if (isLeftPressed && !isRightPresed)
+        {
+            horizontalInput = -1;
+        } 
+        else if (!isLeftPressed && isRightPresed)
+        {
+            horizontalInput = 1;
+        }
+        else
+        {
+            horizontalInput = 0;
+        }
 #endif
+
 
         if (horizontalInput > 0)
         {
             spriteRenderer.flipX = true;
         }
-        else
+        else if (horizontalInput < 0)
         {
             spriteRenderer.flipX = false;
         }
@@ -77,5 +91,25 @@ public class Doodle : MonoBehaviour
     {
         Debug.Log("Game Over");
         Destroy(gameObject);
+    }
+
+    public void LeftPressed()
+    {
+        isLeftPressed = true;
+    }
+
+    public void LeftReleased()
+    {
+        isLeftPressed = false;
+    }
+
+    public void RightPressed()
+    {
+        isRightPresed = true;
+    }
+
+    public void RightReleased()
+    {
+        isRightPresed = false;
     }
 }
